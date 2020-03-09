@@ -28,6 +28,28 @@ def index():
 
 
 ######################################################################
+# CREATE A NEW PROMOTION
+######################################################################
+@app.route("/promotions", methods=["POST"])
+def create_promotions():
+    """
+    Creates a Promotion
+    This endpoint will create a Promotion based the data in the body that is posted
+    """
+    app.logger.info("Request to create a promotion")
+    check_content_type("application/json")
+    promotion = Promotion()
+    promotion.deserialize(request.get_json())
+    promotion.create()
+    message = promotion.serialize()
+    #location_url = url_for("get_promotions", promotion_id=promotion.id, _external=True)
+    location_url = "not implemented"
+    return make_response(
+        jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
+    )
+
+
+######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 
@@ -35,3 +57,11 @@ def init_db():
     """ Initialies the SQLAlchemy app """
     global app
     Promotion.init_db(app)
+
+
+def check_content_type(content_type):
+    """ Checks that the media type is correct """
+    if request.headers["Content-Type"] == content_type:
+        return
+    app.logger.error("Invalid Content-Type: %s", request.headers["Content-Type"])
+    abort(415, "Content-Type must be {}".format(content_type))
