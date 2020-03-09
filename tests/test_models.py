@@ -7,6 +7,7 @@ import unittest
 import os
 from service import app
 from service.models import Promotion, DataValidationError, db
+from datetime import datetime
 
 
 DATABASE_URI = os.getenv(
@@ -47,9 +48,39 @@ class TestPromotion(unittest.TestCase):
 
 
 ######################################################################
-#  P L A C E   T E S T   C A S E S   H E R E
+#  T E S T   C A S E S   S T A R T   H E R E
 ######################################################################
 
-    def test_XXXX(self):
-        """ Test something """
-        self.assertTrue(True)
+    def test_create_a_promotion(self):
+        """ Create a promotion and assert that it exists """
+        promotion = Promotion(
+            name = "Default",
+            description = "default description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        self.assertTrue(promotion != None)
+        self.assertEqual(promotion.id, None)
+        self.assertEqual(promotion.name, "Default")
+        self.assertEqual(promotion.description , "default description")
+        self.assertEqual(promotion.start_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertEqual(promotion.end_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+
+
+    def test_add_a_promotion(self):
+        """ Create a promotion and add it to the database """
+        promotions = Promotion.all()
+        self.assertEqual(promotions, [])
+        promotion = Promotion(
+            name = "Default",
+            description = "default description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        self.assertTrue(promotion != None)
+        self.assertEqual(promotion.id, None)
+        promotion.create()
+        # Asert that it was assigned an id and shows up in the database
+        self.assertEqual(promotion.id, 1)
+        promotions = promotion.all()
+        self.assertEqual(len(promotions), 1)
