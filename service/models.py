@@ -27,8 +27,8 @@ class Promotion(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(63))
     description = db.Column(db.String(128))
-    start_date = db.Column(db.datetime())
-    end_date = db.Column(db.datetime())
+    start_date = db.Column(db.DateTime())
+    end_date = db.Column(db.DateTime())
 
     def __repr__(self):
         return "<Promotion %r id=[%s]>" % (self.name, self.id)

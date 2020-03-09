@@ -4,7 +4,7 @@ Test cases for <your resource name> Model
 """
 import logging
 import unittest
-import os,
+import os
 from service import app
 from service.models import Promotion, DataValidationError, db
 
@@ -26,7 +26,7 @@ class TestPromotion(unittest.TestCase):
         app.config['DEBUG'] = False
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
-        Pet.init_db(app)
+        Promotion.init_db(app)
         pass
 
     @classmethod
