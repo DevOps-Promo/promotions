@@ -109,8 +109,37 @@ class TestPromotionServer(TestCase):
         # self.assertEqual(new_promotion["description"], test_promotion["description"], "Descriptions do not match")
         # self.assertEqual(new_promotion["start_date"], test_promotion["start_date"], "Start dates do not match")
         # self.assertEqual(new_promotion["end_date"], test_promotion["end_date"], "End dates do not match")
+ 
+    def test_delete_promotion(self):
+        """ Delete a Promotion """
         
+        test_promotion = {
+            "name": "Default",
+            "description": "default description",
+            "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        }
+        resp = self.app.post(
+            "/promotions", 
+            json=test_promotion, 
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        new_promotion = resp.get_json()
+        promotion_id = new_promotion["id"]
+
+        resp = self.app.delete(
+            "/promotions/{}".format(promotion_id), content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+        self.assertEqual(len(resp.data), 0)
         
+        # TODO: When get_account is implemented, uncomment below
         
-        
+        # make sure they are deleted
+        # resp = self.app.get(
+        #     "/promotions/{}".format(promotion_id), content_type="application/json"
+        # )
+        # self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)        
+
         
