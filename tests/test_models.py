@@ -84,3 +84,17 @@ class TestPromotion(unittest.TestCase):
         self.assertEqual(promotion.id, 1)
         promotions = promotion.all()
         self.assertEqual(len(promotions), 1)
+
+    def test_delete_a_promotion(self):
+        """ Delete a Promotion """
+        promotion = Promotion(
+            name = "Default",
+            description = "default description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        promotion.create()
+        self.assertEqual(len(Promotion.all()), 1)
+        # delete the promotion and make sure it isn't in the database
+        promotion.delete()
+        self.assertEqual(len(Promotion.all()), 0)
