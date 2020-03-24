@@ -5,6 +5,7 @@ Test cases for <your resource name> Model
 import logging
 import unittest
 import os
+from werkzeug.exceptions import NotFound
 from service import app
 from service.models import Promotion, DataValidationError, db
 from datetime import datetime
@@ -98,3 +99,45 @@ class TestPromotion(unittest.TestCase):
         # delete the promotion and make sure it isn't in the database
         promotion.delete()
         self.assertEqual(len(Promotion.all()), 0)
+
+    
+    def test_find_by_name(self):
+        """ Find a Promotion by Name """
+        Promotion(name="discount").create()
+        Promotion(name="buy one get one").create()
+        promotions = Promotion.find_by_name("buy one get one")
+        self.assertEqual(promotions[0].name, "buy one get one")
+
+    def test_find_or_404_found(self):
+        """ Find or return 404 found """      
+        p1 = Promotion(
+            name = "discount",
+            description = "discount description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        p2 = Promotion(
+            name = "buy one get one",
+            description = "buy one get one description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        p3 = Promotion(
+                name = "promo code",
+            description = "promo code description",
+            start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        )
+        promotions = [p1,p2,p3]
+        p1.create()
+        p2.create()
+        p3.create()
+
+        promotion = Promotion.find_or_404(promotions[1].id)
+        self.assertIsNot(promotion, None)
+        self.assertEqual(promotion.id, promotions[1].id)
+        self.assertEqual(promotion.name, promotions[1].name)
+
+    def test_find_or_404_not_found(self):
+        """ Find or return 404 NOT found """
+        self.assertRaises(NotFound, Promotion.find_or_404, 0)

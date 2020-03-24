@@ -59,21 +59,21 @@ class TestPromotionServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         
         
-    def _create_promotions(self, count):
-        """ Factory method to create promotions in bulk """
-        promotions = []
-        for _ in range(count):
-            test_promotion = promotionFactory()
-            resp = self.app.post(
-                "/promotions", json=test_promotion.serialize(), content_type="application/json"
-            )
-            self.assertEqual(
-                resp.status_code, status.HTTP_201_CREATED, "Could not create test promotion"
-            )
-            new_promotion = resp.get_json()
-            test_promotion.id = new_promotion["id"]
-            promotions.append(test_promotion)
-        return promotions
+    # def _create_promotions(self, count):
+    #     """ Factory method to create promotions in bulk """
+    #     promotions = []
+    #     for _ in range(count):
+    #         test_promotion = promotionFactory()
+    #         resp = self.app.post(
+    #             "/promotions", json=test_promotion.serialize(), content_type="application/json"
+    #         )
+    #         self.assertEqual(
+    #             resp.status_code, status.HTTP_201_CREATED, "Could not create test promotion"
+    #         )
+    #         new_promotion = resp.get_json()
+    #         test_promotion.id = new_promotion["id"]
+    #         promotions.append(test_promotion)
+    #     return promotions
 
     
     def test_create_promotion(self):
@@ -142,4 +142,42 @@ class TestPromotionServer(TestCase):
         # )
         # self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)        
 
+    def test_query_promotion_list_by_category(self):
+        """ Query Promotions by Category """
+        p1 = {
+            "name" : "discount",
+            "description" : "discount description",
+            "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        }
+        resp = self.app.post("/promotions", json=p1, content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+
+        p2 = {
+            "name" : "buy one get one",
+            "description" : "buy one get one description",
+            "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        }
+        resp = self.app.post("/promotions", json=p2, content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+
+        p3 = {
+            "name" : "promo code",
+            "description" : "promo code description",
+            "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        }
+        resp = self.app.post("/promotions", json=p3, content_type="application/json")
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
         
+        promotions = [p1,p2,p3]
+        test_name = promotions[0]["name"]
+        name_promotions = [promotion for promotion in promotions if promotion["name"] == test_name]
+        resp = self.app.get("/promotions", query_string="name={}".format(test_name))
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        data = resp.get_json()
+        self.assertEqual(len(data), len(name_promotions))
+        # check the data just to be sure
+        for promotion in data:
+            self.assertEqual(promotion["name"], test_name)

@@ -64,6 +64,24 @@ def delete_promotion(promotion_id):
     return make_response("", status.HTTP_204_NO_CONTENT)
 
 ######################################################################
+# LIST ALL PROMOTIONS
+######################################################################
+@app.route("/promotions", methods=["GET"])
+def list_promotions():
+    """ Returns all of the Promotions """
+    app.logger.info("Request for promotions list")
+    promotions = []
+    name = request.args.get("name")
+    if name:
+        promotions = Promotion.find_by_name(name)
+    else:
+        promotions = Promotion.all()
+
+    results = [promotion.serialize() for promotion in promotions]
+    return make_response(jsonify(results), status.HTTP_200_OK)
+
+
+######################################################################
 #  U T I L I T Y   F U N C T I O N S
 ######################################################################
 
