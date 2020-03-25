@@ -2,10 +2,10 @@
 
 # Promotions
 
-[![Build Status](https://travis-ci.org/savannahmccoy/lab-travis-ci.svg?branch=master)](https://travis-ci.org/savannahmccoy/lab-travis-ci) 
-[![Codecov](https://img.shields.io/codecov/c/github/savannahmccoy/lab-travis-ci.svg)]()
+[![Build Status](https://travis-ci.org/DevOps-Promo/promotions.svg?branch=master)](https://travis-ci.org/DevOps-Promo/promotions) 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
-
+<br>
+<br>
 
 
 ## Introduction
@@ -21,10 +21,11 @@ This project's `/service` folder contains a file for the `Promotion` model and a
 
 ## Setup
 
-To run this project, you should clone this repository and initialize a vagrant enviroment. Then you can do:
+To run this project, clone this repository and 
+[install vagrant virtual machine](https://www.vagrantup.com/downloads.html)
+. Next, initialize a vagrant enviroment using `vagrant up`. Then do:
 
 ```bash
-vagrant up
 vagrant ssh
 cd /vagrant
 nosetests
@@ -96,6 +97,5 @@ Run the tests using `nosetests` and `coverage`
 
 Nose is configured to automatically include the flags `--rednose --with-spec --spec-color --with-coverage` so that red-green-refactor is meaningful. If you are in a command shell that supports colors, passing tests will be green while failing tests will be red.
 
-
-
-This repository is part of the NYU class **CSCI-GA.2810-001: DevOps and Agile Methodologies** taught by John Rofrano, Adjunct Instructor, NYU Curant Institute, Graduate Division, Computer Science.
+---
+<sub> This repository is part of the NYU class **CSCI-GA.2810-001: DevOps and Agile Methodologies** taught by John Rofrano, Adjunct Instructor, NYU Curant Institute, Graduate Division, Computer Science.</sub>
