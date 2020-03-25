@@ -2,7 +2,9 @@
 
 # Promotions
 
-[![Build Status](https://travis-ci.org/DevOps-Promo/promotions.svg?branch=master)](https://travis-ci.org/DevOps-Promo/promotions) 
+[![Build Status](https://travis-ci.org/DevOps-Promo/promotions.svg?branch=savannahs_branch)](https://travis-ci.org/DevOps-Promo/promotions)
+[![Codecov](https://img.shields.io/codecov/c/github/DevOps-Promo/promotions.svg)]()
+
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br>
 <br>
