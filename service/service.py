@@ -3,7 +3,7 @@ My Service
 
 Describe what your service does here
 """
-
+from werkzeug.exceptions import NotFound
 import os
 import sys
 import logging
@@ -47,6 +47,21 @@ def create_promotions():
     return make_response(
         jsonify(message), status.HTTP_201_CREATED, {"Location": location_url}
     )
+
+######################################################################
+# READ PROMOTION
+######################################################################
+@app.route("/promotions", methods=["GET"])
+def read_promotions():
+    """
+    Reads a single promotion
+    This endpoint will read an account based on it's account id
+    """
+    app.logger.info("Request to read an account with id: %s")
+    account = Account.find()
+    if not account:
+        raise NotFound("account with id '{}' was not found.".format(account_id))
+    return make_response(jsonify(account.serialize()), status.HTTP_200_OK)
 
 
 ######################################################################
