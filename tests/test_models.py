@@ -1,8 +1,7 @@
 """
-Test cases for the Promotions Model
+Test cases for <your resource name> Model
 
 """
-from werkzeug.exceptions import NotFound
 import logging
 import unittest
 import os
@@ -10,9 +9,7 @@ from werkzeug.exceptions import NotFound
 from service import app
 from service.models import Promotion, DataValidationError, db
 from datetime import datetime
-from werkzeug.exceptions import NotFound
-from service.models import Promotion
-from .factories import PromotionFactory
+
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres"
@@ -22,7 +19,7 @@ DATABASE_URI = os.getenv(
 #  P R O M O T I O N   M O D E L   T E S T   C A S E S
 ######################################################################
 class TestPromotion(unittest.TestCase):
-    """ Test Cases for the Promotions Model """
+    """ Test Cases for <your resource name> Model """
 
     @classmethod
     def setUpClass(cls):
@@ -103,7 +100,7 @@ class TestPromotion(unittest.TestCase):
         promotion.delete()
         self.assertEqual(len(Promotion.all()), 0)
 
-
+    
     def test_find_by_name(self):
         """ Find a Promotion by Name """
         Promotion(name="discount").create()
@@ -112,7 +109,7 @@ class TestPromotion(unittest.TestCase):
         self.assertEqual(promotions[0].name, "buy one get one")
 
     def test_find_or_404_found(self):
-        """ Find or return 404 found """
+        """ Find or return 404 found """      
         p1 = Promotion(
             name = "discount",
             description = "discount description",
@@ -136,41 +133,10 @@ class TestPromotion(unittest.TestCase):
         p2.create()
         p3.create()
 
-#####################################################################
-#READ PROMOTION TEST CASE
-#####################################################################
-
-    def test_find_promotion(self):
-        """ Find a Promotion by ID """
-        promotions = PromotionFactory.create_batch(3)
-        for promotion in promotions:
-            promotion.create()
-        logging.debug(promotions)
-        # make sure they got saved
-        self.assertEqual(len(Promotion.all()), 3)
-        # find the 2nd promotion in the list
-        promotion = Promotion.find(promotions[1].id)
-        self.assertIsNot(promotion, None)
-        self.assertEqual(promotion.id, promotions[1].id)
-        self.assertEqual(promotion.name, promotions[1].name)
-        self.assertEqual(promotion.description, promotions[1].description)
-        self.assertEqual(promotion.end_date, promotions[1].end_date)
-        self.assertEqual(promotion.start_date, promotions[1].start_date)
-
-    def test_find_or_404_found(self):
-        """ Find or return 404 found """
-        promotions = PromotionFactory.create_batch(3)
-        for promotion in promotions:
-            promotion.create()
-
         promotion = Promotion.find_or_404(promotions[1].id)
         self.assertIsNot(promotion, None)
-        self.assertEqual(promotion.name, promotions[1].name)
         self.assertEqual(promotion.id, promotions[1].id)
-        self.assertEqual(promotion.description, promotions[1].description)
-        self.assertEqual(promotion.end_date, promotions[1].end_date)
-        self.assertEqual(promotion.start_date, promotions[1].start_date)
-
+        self.assertEqual(promotion.name, promotions[1].name)
 
     def test_find_or_404_not_found(self):
         """ Find or return 404 NOT found """
