@@ -1,9 +1,9 @@
-<img src="https://github.com/DevOps-Promo/promotions/blob/savannahs_branch/assets/promo.png" alt="Promo" width="900">
+<img src="https://github.com/DevOps-Promo/promotions/blob/master/assets/promo.png" alt="Promo" width="900">
 
 # Promotions
 
-[![Build Status](https://travis-ci.org/DevOps-Promo/promotions.svg?branch=savannahs_branch)](https://travis-ci.org/DevOps-Promo/promotions)
-[![codecov](https://codecov.io/gh/DevOps-Promo/promotions/branch/savannahs_branch/graph/badge.svg)](https://codecov.io/gh/DevOps-Promo/promotions)
+[![Build Status](https://travis-ci.org/DevOps-Promo/promotions.svg?branch=master)](https://travis-ci.org/DevOps-Promo/promotions)
+[![codecov](https://codecov.io/gh/DevOps-Promo/promotions/branch/master/graph/badge.svg)](https://codecov.io/gh/DevOps-Promo/promotions)
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 <br>
 <br>
