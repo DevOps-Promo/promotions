@@ -103,6 +103,19 @@ class TestPromotion(unittest.TestCase):
         promotion.delete()
         self.assertEqual(len(Promotion.all()), 0)
 
+    # def test_cancels_a_promotion(self):
+    #     """ Cancels a Promotion """
+    #     promotion = Promotion(
+    #         name = "Default",
+    #         description = "default description",
+    #         start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+    #         end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+    #     )
+    #     promotion.create()
+    #     self.assertEqual(len(Promotion.all()), 1)
+    #     # delete the promotion and make sure it isn't in the database
+    #     promotion.Cancels()
+    #     self.assertEqual(len(Promotion.all()), 0)
 
     def test_find_by_name(self):
         """ Find a Promotion by Name """
@@ -126,7 +139,7 @@ class TestPromotion(unittest.TestCase):
             end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
         )
         p3 = Promotion(
-                name = "promo code",
+            name = "promo code",
             description = "promo code description",
             start_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
             end_date = datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
@@ -170,7 +183,6 @@ class TestPromotion(unittest.TestCase):
         self.assertEqual(promotion.description, promotions[1].description)
         self.assertEqual(promotion.end_date, promotions[1].end_date)
         self.assertEqual(promotion.start_date, promotions[1].start_date)
-
 
     def test_find_or_404_not_found(self):
         """ Find or return 404 NOT found """
