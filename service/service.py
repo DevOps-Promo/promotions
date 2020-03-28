@@ -111,3 +111,33 @@ def check_content_type(content_type):
         return
     app.logger.error("Invalid Content-Type: %s", request.headers["Content-Type"])
     abort(415, "Content-Type must be {}".format(content_type))
+
+######################################################################
+# UPDATE AN EXISTING Account
+######################################################################
+@app.route("/promotion/<int:promotion_id>", methods=["PUT"])
+def update_promotion(promotion_id):
+    """
+    Update an account
+    This endpoint will update a Promotion based the body that is posted
+    """
+    app.logger.info("Request to update promotion with id: %s", promotion_id)
+    check_content_type("application/json")
+    promotion = Promotion.find(promotion_id)
+    if not promotion:
+        raise NotFound("Promotion with id '{}' was not found.".format(promotion_id))
+    promotion.deserialize(request.get_json())
+    promotion.id = promotion_id
+    promotion.save()
+    return make_response(jsonify(promotion.serialize()), status.HTTP_200_OK)
+
+######################################################################
+#  U T I L I T Y   F U N C T I O N S
+######################################################################
+# Need this to run 'Update an Existing Account'
+def check_content_type(content_type):
+    """ Checks that the media type is correct """
+    if request.headers["Content-Type"] == content_type:
+        return
+    app.logger.error("Invalid Content-Type: %s", request.headers["Content-Type"])
+    abort(415, "Content-Type must be {}".format(content_type))

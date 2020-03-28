@@ -175,3 +175,39 @@ class TestPromotion(unittest.TestCase):
     def test_find_or_404_not_found(self):
         """ Find or return 404 NOT found """
         self.assertRaises(NotFound, Promotion.find_or_404, 0)
+
+
+    def test_serialize_a_promotion(self):
+        """ Test serialization of a Promotion"""
+        promotion = Promotion(name="New_Sale", 
+                              description="Amazing", 
+                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'), 
+                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        data = promotion.serialize()
+        self.assertNotEqual(data, None)
+        self.assertIn("id", data)
+        self.assertEqual(data["id"], None)
+        self.assertIn("name", data)
+        self.assertEqual(data["name"], "New_Sale")
+        self.assertIn("description", data)
+        self.assertEqual(data["description"], "Amazing")
+        self.assertIn("start date", data)
+        self.assertEqual(data["start date"], datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertIn("end date", data)
+        self.assertEqual(data["end date"], datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+
+    def test_deserialize_a_promotion(self):
+        """ Test deserialization of a promotion """
+        #data = {"id": 1, "name": "New_deal", "description": "Cool", "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'), "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')}
+        promotion = Promotion(name="New_Sale", 
+                              description="Amazing", 
+                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'), 
+                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        data = promotion.serialize()
+        promotion.deserialize(data)
+        self.assertNotEqual(promotion, None)
+        self.assertEqual(promotion.id, None)
+        self.assertEqual(promotion.name, "New_Sale")
+        self.assertEqual(promotion.description, "Amazing")
+        self.assertEqual(promotion.start_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertEqual(promotion.end_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
