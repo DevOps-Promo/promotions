@@ -233,3 +233,17 @@ class TestPromotionServer(TestCase):
         #reading the put response and placing it in the updated promotion variable 
         updated_promotion = resp.get_json()
         self.assertEqual(updated_promotion["description"], "whatever")
+        print(updated_promotion["id"])
+
+        # resp = self.app.delete(
+        #     "/promotion/{}".format(updated_promotion["id"]),
+        #     content_type="application/json",
+        # )
+        # self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
+
+        resp = self.app.put(
+            "/promotion/{}".format('9999999999'),
+            json=updated_promotion,
+            content_type="application/json",
+        )
+        self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
