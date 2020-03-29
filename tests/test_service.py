@@ -182,30 +182,30 @@ class TestPromotionServer(TestCase):
         for promotion in data:
             self.assertEqual(promotion["name"], test_name)
 
-    def test_update_promotion(self):
-        """ Update a Promotion """
+    # def test_update_promotion(self):
+    #     """ Update a Promotion """
         
-        test_promotion = {
-            "name": "Default",
-            "description": "default description",
-            "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-        }
-      # post it in the service
-        resp = self.app.post(
-            "/promotions", 
-            json=test_promotion, 
-            content_type="application/json"
-        )
-       #checking response: when you send a response to the browser, the backend tells the client and I have created a new entry in the database
-        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+    #     test_promotion = {
+    #         "name": "Default",
+    #         "description": "default description",
+    #         "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+    #         "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+    #     }
+    #   # post it in the service
+    #     resp = self.app.post(
+    #         "/promotions", 
+    #         json=test_promotion, 
+    #         content_type="application/json"
+    #     )
+    #    #checking response: when you send a response to the browser, the backend tells the client and I have created a new entry in the database
+    #     self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
-        updated_promotion = {
-            "name": "New_deal",
-            "description": "Good deal",
-            "start date": datetime.strptime('2002-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end date": datetime.strptime('2003-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-        }
+    #     updated_promotion = {
+    #         "name": "New_deal",
+    #         "description": "Good deal",
+    #         "start date": datetime.strptime('2002-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+    #         "end date": datetime.strptime('2003-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+    #     }
 
     def test_update_promotion(self):
         """ Update an existing Promotion """
@@ -225,7 +225,7 @@ class TestPromotionServer(TestCase):
         new_promotion["description"] = "whatever"
         #when it sends it back to the service, it says I have used this ID and used it on the put request
         resp = self.app.put(
-            "/promotion/{}".format(new_promotion["id"]),
+            "/promotions/{}".format(new_promotion["id"]),
             json=new_promotion,
             content_type="application/json",
         )
@@ -242,8 +242,49 @@ class TestPromotionServer(TestCase):
         # self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
 
         resp = self.app.put(
-            "/promotion/{}".format('9999999999'),
+            "/promotions/{}".format('9999999999'),
             json=updated_promotion,
             content_type="application/json",
         )
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
+
+    def test_cancel_promotion(self):
+        """ Cancel a Promotion """
+        
+        test_promotion = {
+            "name": "Default",
+            "description": "default description",
+            "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date": datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M')
+        }
+      # post it in the service
+        resp = self.app.post(
+            "/promotions", 
+            json=test_promotion, 
+            content_type="application/json"
+        )
+       #checking response: when you send a response to the browser, the backend tells the client and I have created a new entry in the database
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+
+    def test_Cancel_promo(self):
+        """ Cancel a new promotion """
+        test_promotion = {
+            "name": "Default",
+            "description": "default description",
+            "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date":  datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M')
+        }
+        resp = self.app.post(
+            "/promotions", 
+            json=test_promotion, 
+            content_type="application/json"
+        )
+
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        updated_promotion = resp.get_json()
+    
+        # Make sure location header is set
+        resp = self.app.put(
+            '/promotions/cancel/{}'.format(updated_promotion['id']),
+                            content_type='application/json')
+        self.assertEqual(resp.status_code, status.HTTP_200_OK)
