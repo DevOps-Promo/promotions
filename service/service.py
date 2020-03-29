@@ -81,7 +81,7 @@ def list_promotions():
 
     results = [promotion.serialize() for promotion in promotions]
     return make_response(jsonify(results), status.HTTP_200_OK)
-    
+
 ######################################################################
 #READ PROMOTION
 ######################################################################
@@ -132,17 +132,6 @@ def update_promotion(promotion_id):
     promotion.id = promotion_id
     promotion.save()
     return make_response(jsonify(promotion.serialize()), status.HTTP_200_OK)
-
-######################################################################
-#  U T I L I T Y   F U N C T I O N S
-######################################################################
-# Need this to run 'Update an Existing Account'
-def check_content_type(content_type):
-    """ Checks that the media type is correct """
-    if request.headers["Content-Type"] == content_type:
-        return
-    app.logger.error("Invalid Content-Type: %s", request.headers["Content-Type"])
-    abort(415, "Content-Type must be {}".format(content_type))
 
 ######################################################################
 # Cancel AN EXISTING Promotion
