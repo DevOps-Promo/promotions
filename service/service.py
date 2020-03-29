@@ -81,21 +81,21 @@ def list_promotions():
 
     results = [promotion.serialize() for promotion in promotions]
     return make_response(jsonify(results), status.HTTP_200_OK)
+    
 ######################################################################
-# READ PROMOTION
+#READ PROMOTION
 ######################################################################
 @app.route("/promotions/<int:promotion_id>", methods=["GET"])
-def read_promotions():
+def read_promotions(promotion_id):
     """
     Reads a single promotion
-    This endpoint will read an account based on it's account id
+    This endpoint will read an promotion based on it's promotion id
     """
-    app.logger.info("Request to read an account with id: %s")
-    account = Account.find()
-    if not account:
-        raise NotFound("account with id '{}' was not found.".format(account_id))
-    return make_response(jsonify(account.serialize()), status.HTTP_200_OK)
-
+    app.logger.info("Request to read an promotion with id: %s")
+    promotion = Promotion.find(promotion_id)
+    if not promotion:
+        raise NotFound("promotion with id '{}' was not found.".format(promotion_id))
+    return make_response(jsonify(promotion.serialize()), status.HTTP_200_OK)
 
 ######################################################################
 #  U T I L I T Y   F U N C T I O N S
