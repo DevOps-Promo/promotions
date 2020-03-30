@@ -150,7 +150,7 @@ class TestPromotion(unittest.TestCase):
         p3.create()
 
 #####################################################################
-#READ PROMOTION TEST CASE
+# READ PROMOTION TEST CASE
 #####################################################################
 
     def test_find_promotion(self):

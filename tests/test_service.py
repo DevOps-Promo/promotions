@@ -75,32 +75,32 @@ class TestPromotionServer(TestCase):
         resp = self.app.get("/")
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
 
-    # def test_create_promotion(self):
-    #     """ Create a new promotion """
-        # test_promotion = {
-        #     "name": "Default",
-        #     "description": "default description",
-        #     "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-        #     "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-        # }
+    def test_create_promotion(self):
+        """ Create a new promotion """
+        test_promotion = {
+            "name": "Default",
+            "description": "default description",
+            "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
+            "end date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+        }
 
-        # resp = self.app.post(
-        #     "/promotions",
-        #     json=test_promotion,
-        #     content_type="application/json"
-        # )
-        # self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-        # # Make sure location header is set
-        # location = resp.headers.get("Location", None)
-        # self.assertTrue(location != None)
-        # # Check the data is correct
-        # new_promotion = resp.get_json()
-        # self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")
-        # self.assertEqual(new_promotion["description"], test_promotion["description"], "Descriptions do not match")
-        # self.assertEqual(datetime.strptime(new_promotion["start date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["start date"], "Start dates do not match")
-        # self.assertEqual(datetime.strptime(new_promotion["start date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["end date"], "End dates do not match")
+        resp = self.app.post(
+            "/promotions",
+            json=test_promotion,
+            content_type="application/json"
+        )
+        self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        # Make sure location header is set
+        location = resp.headers.get("Location", None)
+        self.assertTrue(location != None)
+        # Check the data is correct
+        new_promotion = resp.get_json()
+        self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")
+        self.assertEqual(new_promotion["description"], test_promotion["description"], "Descriptions do not match")
+        self.assertEqual(datetime.strptime(new_promotion["start date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["start date"], "Start dates do not match")
+        self.assertEqual(datetime.strptime(new_promotion["start date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["end date"], "End dates do not match")
 
-        # TODO: When get_account is implemented, uncomment below
+        # # TODO: When get_promotion is implemented, uncomment below
         # Check that the location header was correct
         # resp = self.app.get(location, content_type="application/json")
         # self.assertEqual(resp.status_code, status.HTTP_200_OK)
@@ -134,9 +134,7 @@ class TestPromotionServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_204_NO_CONTENT)
         self.assertEqual(len(resp.data), 0)
 
-        # TODO: When get_account is implemented, uncomment below
-
-        # make sure they are deleted
+        # TODO: When get_promotion is implemented, uncomment below to make sure they are deleted
         # resp = self.app.get(
         #     "/promotions/{}".format(promotion_id), content_type="application/json"
         # )
@@ -200,7 +198,7 @@ class TestPromotionServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
         #####################################################################
-        #QUERY PROMOTION TEST CASE
+        # QUERY PROMOTION TEST CASE
         #####################################################################
 
     def test_query_promotion_list_by_category(self):
