@@ -98,9 +98,9 @@ Vagrant.configure(2) do |config|
     echo " kubectl proxy --address='0.0.0.0'"
     echo "************************************\n"
     # Show the GUI URL for Couch DB
-    echo "\n"
-    echo "CouchDB Admin GUI can be found at:\n"
-    echo "http://127.0.0.1:5984/_utils"    
+    # echo "\n"
+    # echo "CouchDB Admin GUI can be found at:\n"
+    # echo "http://127.0.0.1:5984/_utils"    
   SHELL
 
   ######################################################################
