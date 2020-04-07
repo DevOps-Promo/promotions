@@ -135,12 +135,15 @@ class Promotion(db.Model):
     def init_db(dbname='promotions'):
         """
         Initialized Postgres database connection
-         This method will work in the following conditions:
-          1) With DATABASE_URI as an environment variable
-          2) In Bluemix with DB2 bound through VCAP_SERVICES
-          3) With PostgreSQL running on the local server as with Travis CI
+        
         """
+        # This method will work in the following conditions:
+        #  1) With DATABASE_URI as an environment variable
+        #  2) In Bluemix with DB2 bound through VCAP_SERVICES
+        #  3) With PostgreSQL running on the local server as with Travis CI
+        
         database_uri = None
+        
         if 'DATABASE_URI' in os.environ:
             # Get the credentials from DATABASE_URI
             current_app.logger.info("Using DATABASE_URI...")
