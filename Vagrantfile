@@ -92,17 +92,18 @@ Vagrant.configure(2) do |config|
     echo "You can login with the following command:"
     echo "\n"
     echo "ibmcloud login -a https://cloud.ibm.com --apikey @~/.bluemix/apiKey.json -r us-south"
-    echo "\n"
-    echo "\n************************************"
-    echo " For the Kubernetes Dashboard use:"
-    echo " kubectl proxy --address='0.0.0.0'"
-    echo "************************************\n"
-    # Show the GUI URL for Couch DB
-    # echo "\n"
-    # echo "CouchDB Admin GUI can be found at:\n"
-    # echo "http://127.0.0.1:5984/_utils"    
+
   SHELL
 
+  # echo "\n"
+  # echo "\n************************************"
+  # echo " For the Kubernetes Dashboard use:"
+  # echo " kubectl proxy --address='0.0.0.0'"
+  # echo "************************************\n"
+  # Show the GUI URL for Couch DB
+  # echo "\n"
+  # echo "CouchDB Admin GUI can be found at:\n"
+  # echo "http://127.0.0.1:5984/_utils"   
   ######################################################################
   # Add PostgreSQL docker container
   ######################################################################
