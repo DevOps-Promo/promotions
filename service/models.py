@@ -3,15 +3,17 @@ Models for Promotion
 
 All of the models are stored in this module
 """
-import logging, os, json
+import logging, os 
+import json
 from flask_sqlalchemy import SQLAlchemy
-
-DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
 
 logger = logging.getLogger("flask.app")
 
 # Create the SQLAlchemy object to be initialized later in init_db()
 db = SQLAlchemy()
+
+DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
+
 
 class DataValidationError(Exception):
     """ Used for an data validation errors when deserializing """
@@ -128,40 +130,18 @@ class Promotion(db.Model):
 
 
 
-
-
 ############################################################
 #  P O S T G R E S   D A T A B A S E   C O N N E C T I O N
 ############################################################
-
-
-    @staticmethod
-    def init_db(dbname='promotions'):
-        """
-        Initialized Postgres database connection
-    
-        """
-        database_uri = None
-    
-        if 'DATABASE_URI' in os.environ:
-            # Get the credentials from DATABASE_URI
-            Promotion.logger.info("Using DATABASE_URI...")
-            # current_app.logger.info("Using DATABASE_URI...")
-            database_uri = os.environ['DATABASE_URI']
-        elif 'VCAP_SERVICES' in os.environ:
-            # if 'VCAP_SERVICES' in os.environ:
-            vcap = json.loads(os.environ['VCAP_SERVICES'])
-            DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
-            # Get the credentials from the Bluemix environment
-            # Promotion.logger.info("Using VCAP_SERVICES...")
-            # # current_app.logger.info("Using VCAP_SERVICES...")
-            # vcap_services = os.environ['VCAP_SERVICES']
-            # services = json.loads(vcap_services)
-            # creds = services['dashDB For Transactions'][0]['credentials']
-            # database_uri = creds["uri"]
-        else:
-            Promotion.logger.info("Using localhost database...")
-            # current_app.logger.info("Using localhost database...")
-            database_uri = "postgres://postgres:postgres@localhost:5432/postgres"
-    
-        return database_uri
+    # 
+    # @staticmethod
+    # def init_db(dbname='promotions'):
+    #     """
+    #     Initialized Postgres database connection
+    # 
+    #     """
+    #     if 'VCAP_SERVICES' in os.environ:
+    #         vcap = json.loads(os.environ['VCAP_SERVICES'])
+    #         DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
+        
+        
