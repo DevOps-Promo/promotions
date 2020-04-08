@@ -5,7 +5,7 @@ Test cases for the Promotions Model
 from werkzeug.exceptions import NotFound
 import logging
 import unittest
-import os
+import os, json
 from werkzeug.exceptions import NotFound
 from service import app
 from service.models import Promotion, DataValidationError, db
@@ -27,6 +27,7 @@ class TestPromotion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """ This runs once before the entire test suite """
+        global DATABASE_URI
         app.config['TESTING'] = True
         app.config['DEBUG'] = False
         if 'VCAP_SERVICES' in os.environ:
