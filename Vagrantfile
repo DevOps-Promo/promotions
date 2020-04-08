@@ -92,7 +92,6 @@ Vagrant.configure(2) do |config|
     echo "You can login with the following command:"
     echo "\n"
     echo "ibmcloud login -a https://cloud.ibm.com --apikey @~/.bluemix/apiKey.json -r us-south"
- 
   SHELL
 
   # echo "\n"
