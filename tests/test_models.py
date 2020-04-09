@@ -5,7 +5,7 @@ Test cases for the Promotions Model
 from werkzeug.exceptions import NotFound
 import logging
 import unittest
-import os
+import os, json
 from werkzeug.exceptions import NotFound
 from service import app
 from service.models import Promotion, DataValidationError, db
@@ -27,12 +27,15 @@ class TestPromotion(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
         """ This runs once before the entire test suite """
+        global DATABASE_URI
         app.config['TESTING'] = True
         app.config['DEBUG'] = False
+        if 'VCAP_SERVICES' in os.environ:
+            vcap = json.loads(os.environ['VCAP_SERVICES'])
+            DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
         app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
         app.logger.setLevel(logging.CRITICAL)
         Promotion.init_db(app)
-        pass
 
     @classmethod
     def tearDownClass(cls):

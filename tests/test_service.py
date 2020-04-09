@@ -7,6 +7,7 @@ Test cases can be run with the following:
 """
 import os
 import logging
+
 from unittest import TestCase
 from unittest.mock import MagicMock, patch
 from flask_api import status  # HTTP Status Codes
@@ -15,9 +16,13 @@ from service.service import app, init_db
 from datetime import datetime
 from .factories import PromotionFactory
 
-DATABASE_URI = os.getenv(
-    "DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres"
-)
+import json
+
+DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
+
+if 'VCAP_SERVICES' in os.environ:
+    vcap = json.loads(os.environ['VCAP_SERVICES'])
+    DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
 
 
 ######################################################################
@@ -26,10 +31,22 @@ DATABASE_URI = os.getenv(
 class TestPromotionServer(TestCase):
     """ Promotion Server Tests """
 
+    # @classmethod
+    # def setUpClass(cls):
+    #     app.config['TESTING'] = True
+    #     app.config['DEBUG'] = False
+    #     if 'VCAP_SERVICES' in os.environ:
+    #         vcap = json.loads(os.environ['VCAP_SERVICES'])
+    #         DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
+    #     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
+    #     app.logger.setLevel(logging.CRITICAL)
+    #     Promotion.init_db(app)
+    # 
+    
     @classmethod
     def setUpClass(cls):
         """ This runs once before the entire test suite """
-        pass
+    
 
     @classmethod
     def tearDownClass(cls):

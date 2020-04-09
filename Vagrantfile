@@ -85,6 +85,8 @@ Vagrant.configure(2) do |config|
     echo "************************************\n"
     # Install IBM Cloud CLI as Vagrant user
     sudo -H -u vagrant sh -c 'curl -sL http://ibm.biz/idt-installer | bash'
+    sudo -H -u vagrant sh -c 'ibmcloud config --usage-stats-collect false'
+    sudo -H -u vagrant sh -c 'ibmcloud cf install'
     sudo -H -u vagrant sh -c "echo 'source <(kubectl completion bash)' >> ~/.bashrc"
     sudo -H -u vagrant sh -c "echo alias ic=/usr/local/bin/ibmcloud >> ~/.bash_aliases"
     echo "\n"
@@ -92,7 +94,6 @@ Vagrant.configure(2) do |config|
     echo "You can login with the following command:"
     echo "\n"
     echo "ibmcloud login -a https://cloud.ibm.com --apikey @~/.bluemix/apiKey.json -r us-south"
-
   SHELL
 
   # echo "\n"
@@ -104,6 +105,7 @@ Vagrant.configure(2) do |config|
   # echo "\n"
   # echo "CouchDB Admin GUI can be found at:\n"
   # echo "http://127.0.0.1:5984/_utils"   
+
   ######################################################################
   # Add PostgreSQL docker container
   ######################################################################
