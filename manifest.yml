@@ -1,11 +1,16 @@
 applications:
-- path: .
+- name: promotions
+  path: .
+  instances: 2
   memory: 64M
-  instances: 1
-  domain: mybluemix.net
-  name: nyu-lab-travis-ci
-  host: nyu-lab-travis-ci
+  routes:
+  - route: nyu-promotion-service-s20.us-south.cf.appdomain.cloud
   disk_quota: 1024M
+  buildpacks: 
+  - python_buildpack
+  timeout: 180
   services:
-      - RedisCloud
-  buildpack: python_buildpack
+  - ElephantSQL
+  env:
+    FLASK_APP : service:app
+    FLASK_DEBUG : false
