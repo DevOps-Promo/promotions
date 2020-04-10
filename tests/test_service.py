@@ -15,7 +15,6 @@ from service.models import db
 from service.service import app, init_db
 from datetime import datetime
 from .factories import PromotionFactory
-
 import json
 
 DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")

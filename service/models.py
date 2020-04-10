@@ -20,6 +20,7 @@ if 'VCAP_SERVICES' in os.environ:
     DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
 
 
+
 class DataValidationError(Exception):
     """ Used for an data validation errors when deserializing """
     pass

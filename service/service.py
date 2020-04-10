@@ -16,7 +16,6 @@ from service.models import Promotion, DataValidationError
 
 # Import Flask application
 from . import app
-
 import datetime
 
 ######################################################################
