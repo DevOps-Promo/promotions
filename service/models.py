@@ -12,7 +12,12 @@ logger = logging.getLogger("flask.app")
 # Create the SQLAlchemy object to be initialized later in init_db()
 db = SQLAlchemy()
 
+
 DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
+
+if 'VCAP_SERVICES' in os.environ:
+    vcap = json.loads(os.environ['VCAP_SERVICES'])
+    DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
 
 
 class DataValidationError(Exception):
@@ -129,19 +134,17 @@ class Promotion(db.Model):
         return cls.query.filter(cls.name == name)
 
 
-
-############################################################
-#  P O S T G R E S   D A T A B A S E   C O N N E C T I O N
-############################################################
-    # 
-    # @staticmethod
-    # def init_db(dbname='promotions'):
-    #     """
-    #     Initialized Postgres database connection
-    # 
-    #     """
-    #     if 'VCAP_SERVICES' in os.environ:
-    #         vcap = json.loads(os.environ['VCAP_SERVICES'])
-    #         DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
-        
-        
+# ############################################################
+# #  P O S T G R E S   D A T A B A S E   C O N N E C T I O N
+# ############################################################
+# 
+#     @staticmethod
+#     def init_db(dbname='promotions'):
+#         """
+#         Initialized Postgres database connection
+# 
+#         """
+#         if 'VCAP_SERVICES' in os.environ:
+#             vcap = json.loads(os.environ['VCAP_SERVICES'])
+#             DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
+            

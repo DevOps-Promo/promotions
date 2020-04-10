@@ -30,18 +30,6 @@ if 'VCAP_SERVICES' in os.environ:
 ######################################################################
 class TestPromotionServer(TestCase):
     """ Promotion Server Tests """
-
-    # @classmethod
-    # def setUpClass(cls):
-    #     app.config['TESTING'] = True
-    #     app.config['DEBUG'] = False
-    #     if 'VCAP_SERVICES' in os.environ:
-    #         vcap = json.loads(os.environ['VCAP_SERVICES'])
-    #         DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
-    #     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
-    #     app.logger.setLevel(logging.CRITICAL)
-    #     Promotion.init_db(app)
-    # 
     
     @classmethod
     def setUpClass(cls):
