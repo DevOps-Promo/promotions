@@ -15,7 +15,6 @@ from service.models import db
 from service.service import app, init_db
 from datetime import datetime
 from .factories import PromotionFactory
-
 import json
 
 DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
@@ -30,18 +29,6 @@ if 'VCAP_SERVICES' in os.environ:
 ######################################################################
 class TestPromotionServer(TestCase):
     """ Promotion Server Tests """
-
-    # @classmethod
-    # def setUpClass(cls):
-    #     app.config['TESTING'] = True
-    #     app.config['DEBUG'] = False
-    #     if 'VCAP_SERVICES' in os.environ:
-    #         vcap = json.loads(os.environ['VCAP_SERVICES'])
-    #         DATABASE_URI = vcap['user-provided'][0]['credentials']['url']
-    #     app.config["SQLALCHEMY_DATABASE_URI"] = DATABASE_URI
-    #     app.logger.setLevel(logging.CRITICAL)
-    #     Promotion.init_db(app)
-    # 
     
     @classmethod
     def setUpClass(cls):
@@ -108,10 +95,11 @@ class TestPromotionServer(TestCase):
             content_type="application/json"
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
+        
         # Make sure location header is set
         location = resp.headers.get("Location", None)
-        print(location)
         self.assertTrue(location != None)
+        
         # Check the data is correct
         new_promotion = resp.get_json()
         self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")
@@ -160,7 +148,6 @@ class TestPromotionServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
 
-    # def test_query_promotion_list_by_name(self):
     def test_list_promotion(self):
         """ Get a list of Promotions """
         self._create_promotions(5)
@@ -168,47 +155,6 @@ class TestPromotionServer(TestCase):
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
         data = resp.get_json()
         self.assertEqual(len(data), 5)
-
-
-    # def test_list_promotions(self):
-    #     """ List Promotions by Name """
-    #     p1 = {
-    #         "name" : "30% discount",
-    #         "description" : "discount description",
-    #         "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-    #         "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-    #     }
-    #     resp = self.app.post("/promotions", json=p1, content_type="application/json")
-    #     self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-    #
-    #     p2 = {
-    #         "name" : "buy one get one free diploma",
-    #         "description" : "buy one get one description",
-    #         "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-    #         "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-    #     }
-    #     resp = self.app.post("/promotions", json=p2, content_type="application/json")
-    #     self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-    #
-    #     p3 = {
-    #         "name" : "Free Phish t-shirt with purchase",
-    #         "description" : "promo code description",
-    #         "start date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-    #         "end date" : datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
-    #     }
-    #     resp = self.app.post("/promotions", json=p3, content_type="application/json")
-    #     self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-    #
-    #     promotions = [p1,p2,p3]
-    #     test_name = promotions[0]["name"]
-    #     name_promotions = [promotion for promotion in promotions if promotion["name"] == test_name]
-    #     resp = self.app.get("/promotions", query_string="name={}".format(test_name))
-    #     self.assertEqual(resp.status_code, status.HTTP_200_OK)
-    #     data = resp.get_json()
-    #     self.assertEqual(len(data), len(name_promotions))
-    #     # check the data just to be sure
-    #     for promotion in data:
-    #         self.assertEqual(promotion["name"], test_name)
 
 
     def test_get_promotion(self):
@@ -276,22 +222,6 @@ class TestPromotionServer(TestCase):
         )
         self.assertEqual(resp.status_code, status.HTTP_404_NOT_FOUND)
 
-
-    # def test_cancel_promotion(self):
-    #     """ Cancel a Promotion """
-    #
-    #     test_promotion = {
-    #         "name": "Default",
-    #         "description": "default description",
-    #         "start date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-    #         "end date": datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M')
-    #     }
-    #     resp = self.app.post(
-    #         "/promotions",
-    #         json=test_promotion,
-    #         content_type="application/json"
-    #     )
-    #     self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
 
 
     def test_cancel_promotion(self):
