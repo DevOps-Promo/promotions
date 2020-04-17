@@ -76,8 +76,9 @@ class TestPromotionServer(TestCase):
     ######################################################################
     def test_index(self):
         """ Test index call """
-        resp = self.app.get("/")
-        self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        resp = self.app.get('/')
+        self.assertEqual(resp.status_code, HTTP_200_OK)
+        self.assertIn(b'Promotion Demo REST API Service', resp.data)
 
 
     def test_create_promotion(self):
