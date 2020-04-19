@@ -32,7 +32,7 @@ $(function () {
     // ****************************************
 
     $("#create-btn").click(function () {
-
+        
         var name = $("#promotion_name").val();
         var description = $("#promotion_description").val();
         var start_date = $("#promotion_start_date").val();
