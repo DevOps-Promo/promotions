@@ -6,19 +6,19 @@ Promotions Resource
 
 <p align="center">
     <a href="https://travis-ci.org/DevOps-Promo/promotions">
-        <img src="https://travis-ci.org/DevOps-Promo/promotions.svg?branch=master"
+        <img src="https://img.shields.io/travis/DevOps-promo/promotions/master?style=flat-square"
              alt="travis">
       </a>
     <a href="https://codecov.io/gh/DevOps-Promo/promotions">
-    <img src="https://codecov.io/gh/DevOps-Promo/promotions/branch/master/graph/badge.svg"
+    <img src="https://img.shields.io/codecov/c/github/DevOps-promo/promotions/master?style=flat-square"
          alt="codecov">
     </a>
     <a href="https://github.com/devops-promo/promotions/graphs/contributors">
-    <img src="https://img.shields.io/github/contributors/devops-promo/promotions.svg"
+    <img src="https://img.shields.io/github/contributors/devops-promo/promotions.svg?style=flat-square"
          alt="contributors">
     </a>
     <a href="https://opensource.org/licenses/Apache-2.0">
-    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg"
+    <img src="https://img.shields.io/badge/License-Apache%202.0-blue.svg?style=flat-square"
          alt="license">
     </a>
 </p>
