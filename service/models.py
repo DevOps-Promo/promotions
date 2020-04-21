@@ -3,7 +3,7 @@ Models for Promotion
 
 All of the models are stored in this module
 """
-import logging, os 
+import logging, os
 import json
 from flask_sqlalchemy import SQLAlchemy
 
@@ -64,8 +64,8 @@ class Promotion(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "start date": self.start_date,
-            "end date": self.end_date
+            "start_date": self.start_date,
+            "end_date": self.end_date
         }
 
     def deserialize(self, data):
@@ -78,8 +78,8 @@ class Promotion(db.Model):
         try:
             self.name = data["name"]
             self.description = data["description"]
-            self.start_date = data["start date"]
-            self.end_date = data["end date"]
+            self.start_date = data["start_date"]
+            self.end_date = data["end_date"]
         except KeyError as error:
             raise DataValidationError("Invalid Promotion: missing " + error.args[0])
         except TypeError as error:
