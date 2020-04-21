@@ -76,8 +76,9 @@ class TestPromotionServer(TestCase):
     ######################################################################
     def test_index(self):
         """ Test index call """
-        resp = self.app.get("/")
+        resp = self.app.get('/')
         self.assertEqual(resp.status_code, status.HTTP_200_OK)
+        self.assertIn(b'Promotion REST API Service', resp.data)
 
 
     def test_create_promotion(self):
@@ -105,7 +106,7 @@ class TestPromotionServer(TestCase):
         self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")
         self.assertEqual(new_promotion["description"], test_promotion["description"], "Descriptions do not match")
         self.assertEqual(datetime.strptime(new_promotion["start_date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["start_date"], "Start dates do not match")
-        self.assertEqual(datetime.strptime(new_promotion["start_date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["end_date"], "End dates do not match")
+        self.assertEqual(datetime.strptime(new_promotion["end_date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["end_date"], "End dates do not match")
 
         # TODO: When get_promotion is implemented, uncomment below
         # resp = self.app.get(location, content_type="application/json")

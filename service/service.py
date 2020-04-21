@@ -6,7 +6,7 @@ from werkzeug.exceptions import NotFound
 import os
 import sys
 import logging
-from flask import Flask, jsonify, request, url_for, make_response, abort
+from flask import Flask, json, jsonify, request, url_for, make_response, abort
 from flask_api import status  # HTTP Status Codes
 
 # For this example we'll use SQLAlchemy, a popular ORM that supports a
@@ -23,9 +23,7 @@ import datetime
 ######################################################################
 @app.route("/")
 def index():
-    """ Root URL response """
-    return ("Reminder: return some useful information in json format about the service here", 
-            status.HTTP_200_OK)
+    return app.send_static_file('index.html')
 
 
 ######################################################################
