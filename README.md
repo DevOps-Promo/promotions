@@ -2,7 +2,7 @@
 <h1 align="center">
 Promotions Resource
 </h1>
-
+<h4 align="center"> <strong>A RESTful microservice based on a resource from an eCommerce application </strong></h3>
 
 <p align="center">
     <a href="https://travis-ci.org/DevOps-Promo/promotions">
@@ -35,24 +35,18 @@ Promotions Resource
 </p>
 
 
-<br>
-<br>
+## 👋 Introduction 
+
+#### The promotions resource is a representation of a special promotion or sale that is running against a product or perhaps the entire store. Some examples are "buy 1 get 1 free", "20% off", etc. Discount promotions usually apply for a given duration (e.g., sale for 1 week only).
 
 
 
-
-## Introduction
-
-#### This project is a RESTful microservice based on a resource from an eCommerce application. The promotions resource is a representation of a special promotion or sale that is running against a product or perhaps the entire store. Some examples are "buy 1 get 1 free", "20% off", etc. Discount promotions usually apply for a given duration (e.g., sale for 1 week only).
-
-
-
-## Overview
+## 👀 Overview
 
 This project's `/service` folder contains a file for the `Promotion` model and a `service.py` file for promotions service. The `/tests` folder has test case code for testing the model and the service separately. 
 
 
-## Setup
+## 💾 Setup
 
 To run this project, clone this repository and 
 [install vagrant virtual machine](https://www.vagrantup.com/downloads.html)
@@ -65,7 +59,7 @@ nosetests
 honcho start
 ```
 
-## Attributes
+## ⚙️ Attributes
 
 The `Promotion` Model contains the following attributes: <br>
 * `"name"` <br>
@@ -74,7 +68,7 @@ The `Promotion` Model contains the following attributes: <br>
 * `"end_date"`<br>
 
 
-## Functions
+## 🛠 Functions
 
 The following lists the RESTful routes:
 ```
@@ -94,7 +88,7 @@ cancel_promotions  GET      /promotions/cancel/<promotion_id>   end a promotion 
 
 
 
-## What's Featured in the Project?
+## ❓ What's Featured in the Project?
 
 The project contains the following:
 
@@ -131,7 +125,7 @@ setup.cfg           - nosetests configuration file
 
 
 
-## Running the Tests
+## 🔩 Running the Tests
 
 Run the tests using `nosetests` and `coverage`
 
@@ -142,7 +136,7 @@ Nose is configured to automatically include the flags `--rednose --with-spec --s
 
 
 
-## License
+## 📃 License
 Apache 2.0
 
 ---
