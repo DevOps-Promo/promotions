@@ -29,11 +29,11 @@ if 'VCAP_SERVICES' in os.environ:
 ######################################################################
 class TestPromotionServer(TestCase):
     """ Promotion Server Tests """
-    
+
     @classmethod
     def setUpClass(cls):
         """ This runs once before the entire test suite """
-    
+
 
     @classmethod
     def tearDownClass(cls):
@@ -96,11 +96,11 @@ class TestPromotionServer(TestCase):
             content_type="application/json"
         )
         self.assertEqual(resp.status_code, status.HTTP_201_CREATED)
-        
+
         # Make sure location header is set
         location = resp.headers.get("Location", None)
         self.assertTrue(location != None)
-        
+
         # Check the data is correct
         new_promotion = resp.get_json()
         self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")

@@ -3,7 +3,7 @@ Models for Promotion
 
 All of the models are stored in this module
 """
-import logging, os 
+import logging, os
 import json
 from flask_sqlalchemy import SQLAlchemy
 
