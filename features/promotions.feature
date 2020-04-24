@@ -36,3 +36,22 @@ Scenario: Create a promotion
     And I should see "sale" in the "Description" field
     And I should see "2020-04-23 12:00:00" in the "Start_date" field
     And I should see "2020-04-24 12:00:00" in the "End_date" field
+
+Scenario: Update a Promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "promo"
+    And I press the "Search" button
+    Then I should see "promo" in the "Name" field
+    And I should see "tenpercent" in the "Description" field
+    When I change "Name" to "discount"
+    And I press the "Update" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see "discount" in the "Name" field
+    When I press the "Clear" button
+    And I press the "Search" button
+    Then I should see "discount" in the results
+    Then I should not see "promo" in the results
