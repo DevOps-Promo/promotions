@@ -13,6 +13,7 @@ from datetime import datetime
 from werkzeug.exceptions import NotFound
 from service.models import Promotion
 from .factories import PromotionFactory
+from service.models import DATETIME_FORMAT
 
 DATABASE_URI = os.getenv(
     "DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres"
@@ -188,8 +189,8 @@ class TestPromotion(unittest.TestCase):
         """ Test serialization of a Promotion"""
         promotion = Promotion(name="New_Sale",
                               description="Amazing",
-                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S'),
+                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S'))
         data = promotion.serialize()
         self.assertNotEqual(data, None)
         self.assertIn("id", data)
@@ -199,21 +200,21 @@ class TestPromotion(unittest.TestCase):
         self.assertIn("description", data)
         self.assertEqual(data["description"], "Amazing")
         self.assertIn("start_date", data)
-        self.assertEqual(data["start_date"], datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertEqual(datetime.strptime(data["start_date"], DATETIME_FORMAT), datetime.strptime('2001-01-01 00:00:00', DATETIME_FORMAT))
         self.assertIn("end_date", data)
-        self.assertEqual(data["end_date"], datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertEqual(datetime.strptime(data["end_date"], DATETIME_FORMAT), datetime.strptime('2001-01-01 00:00:00', DATETIME_FORMAT))
 
     def test_deserialize_a_promotion(self):
         """ Test deserialization of a promotion """
         promotion = Promotion(name="New_Sale",
                               description="Amazing",
-                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+                              start_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S'),
+                              end_date=datetime.strptime('2001-01-01 00:00:00', '%Y-%m-%d %H:%M:%S'))
         data = promotion.serialize()
         promotion.deserialize(data)
         self.assertNotEqual(promotion, None)
         self.assertEqual(promotion.id, None)
         self.assertEqual(promotion.name, "New_Sale")
         self.assertEqual(promotion.description, "Amazing")
-        self.assertEqual(promotion.start_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
-        self.assertEqual(promotion.end_date, datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'))
+        self.assertEqual(promotion.start_date, datetime.strptime('2001-01-01 00:00:00', DATETIME_FORMAT))
+        self.assertEqual(promotion.end_date, datetime.strptime('2001-01-01 00:00:00', DATETIME_FORMAT))

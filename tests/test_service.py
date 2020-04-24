@@ -16,6 +16,7 @@ from service.service import app, init_db
 from datetime import datetime
 from .factories import PromotionFactory
 import json
+from service.models import DATETIME_FORMAT
 
 DATABASE_URI = os.getenv("DATABASE_URI", "postgres://postgres:postgres@localhost:5432/postgres")
 
@@ -86,8 +87,8 @@ class TestPromotionServer(TestCase):
         test_promotion = {
             "name": "Default",
             "description": "default description",
-            "start_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+            "start_date": '2001-01-01 00:00:00',
+            "end_date": '2002-01-01 00:00:00'
         }
 
         resp = self.app.post(
@@ -105,8 +106,8 @@ class TestPromotionServer(TestCase):
         new_promotion = resp.get_json()
         self.assertEqual(new_promotion["name"], test_promotion["name"], "Names do not match")
         self.assertEqual(new_promotion["description"], test_promotion["description"], "Descriptions do not match")
-        self.assertEqual(datetime.strptime(new_promotion["start_date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["start_date"], "Start dates do not match")
-        self.assertEqual(datetime.strptime(new_promotion["end_date"], '%a, %d %b %Y %H:%M:%S GMT'), test_promotion["end_date"], "End dates do not match")
+        self.assertEqual(datetime.strptime(new_promotion["start_date"], DATETIME_FORMAT), datetime.strptime(test_promotion["start_date"], DATETIME_FORMAT), "Start dates do not match")
+        self.assertEqual(datetime.strptime(new_promotion["end_date"], DATETIME_FORMAT), datetime.strptime(test_promotion["end_date"], DATETIME_FORMAT), "End dates do not match")
 
         # TODO: When get_promotion is implemented, uncomment below
         # resp = self.app.get(location, content_type="application/json")
@@ -124,8 +125,8 @@ class TestPromotionServer(TestCase):
         test_promotion = {
             "name": "Default",
             "description": "default description",
-            "start_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+            "start_date": '2001-01-01 00:00:00',
+            "end_date": '2002-01-01 00:00:00'
         }
         resp = self.app.post(
             "/promotions",
@@ -197,8 +198,8 @@ class TestPromotionServer(TestCase):
         test_promotion = {
             "name": "Default",
             "description": "default description",
-            "start_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S')
+            "start_date": '2001-01-01 00:00:00',
+            "end_date": '2002-01-01 00:00:00'
         }
         resp = self.app.post(
             "/promotions", json=test_promotion, content_type="application/json"
@@ -230,8 +231,8 @@ class TestPromotionServer(TestCase):
         test_promotion = {
             "name": "Default",
             "description": "default description",
-            "start_date": datetime.strptime('2001-01-01 00:00:00', '%Y-%d-%m %H:%M:%S'),
-            "end_date":  datetime.strftime(datetime.now(), '%Y-%m-%d %H:%M')
+            "start_date": '2001-01-01 00:00:00',
+            "end_date": '2002-01-01 00:00:00'
         }
         resp = self.app.post(
             "/promotions",

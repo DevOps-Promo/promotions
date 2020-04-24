@@ -6,6 +6,9 @@ All of the models are stored in this module
 import logging, os
 import json
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
+
+DATETIME_FORMAT = '%Y-%m-%d %H:%M:%S'
 
 logger = logging.getLogger("flask.app")
 
@@ -64,8 +67,8 @@ class Promotion(db.Model):
             "id": self.id,
             "name": self.name,
             "description": self.description,
-            "start_date": self.start_date,
-            "end_date": self.end_date
+            "start_date": datetime.strftime(self.start_date, DATETIME_FORMAT),
+            "end_date": datetime.strftime(self.end_date, DATETIME_FORMAT)
         }
 
     def deserialize(self, data):
@@ -78,8 +81,8 @@ class Promotion(db.Model):
         try:
             self.name = data["name"]
             self.description = data["description"]
-            self.start_date = data["start_date"]
-            self.end_date = data["end_date"]
+            self.start_date = datetime.strptime(data["start_date"], DATETIME_FORMAT)
+            self.end_date = datetime.strptime(data["end_date"], DATETIME_FORMAT)
         except KeyError as error:
             raise DataValidationError("Invalid Promotion: missing " + error.args[0])
         except TypeError as error:
