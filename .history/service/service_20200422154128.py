@@ -88,7 +88,7 @@ def read_promotions(promotion_id):
     Reads a single promotion
     This endpoint will read an promotion based on it's promotion id
     """
-    app.logger.info("Request to read an promotion with id: {}".format(promotion_id))
+    app.logger.info("Request to read an promotion with id: %s")
     promotion = Promotion.find(promotion_id)
     if not promotion:
         raise NotFound("promotion with id '{}' was not found.".format(promotion_id))

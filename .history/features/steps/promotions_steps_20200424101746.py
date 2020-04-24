@@ -24,7 +24,7 @@ def step_impl(context):
     promotions = requests.get(context.base_url + '/promotions', headers=headers)
     
     for promo in promotions.json():
-        context.resp = requests.delete(context.base_url + '/promotions/' + str(promo['id']), headers=headers)
+        context.resp = requests.delete(context.base_url + '/promotions/' + promo['id'], headers=headers)
         expect(context.resp.status_code).to_equal(204)
 
     create_url = context.base_url + '/promotions'
