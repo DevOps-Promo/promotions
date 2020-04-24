@@ -6,7 +6,7 @@ $(function () {
 
     // Updates the form with data from the response
     function update_form_data(res) {
-        $("#promotion_id").val(res.id);
+        $("#promotion_id").val(res._id);
         $("#promotion_name").val(res.name);
         $("#promotion_description").val(res.description);
         $("#promotion_start_date").val(res.start_date);
