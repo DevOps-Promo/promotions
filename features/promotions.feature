@@ -55,3 +55,10 @@ Scenario: Update a Promotion
     And I press the "Search" button
     Then I should see "discount" in the results
     Then I should not see "promo" in the results
+
+Scenario: List all promotions
+    When I visit the "Home Page"
+    And I press the "Search" button
+    Then I should see "promo" in the results
+    And I should see "discount" in the results
+    And I should not see "halfoff" in the results
