@@ -63,6 +63,31 @@ Scenario: List all promotions
     And I should see "discount" in the results
     And I should not see "halfoff" in the results
 
+Scenario: Delete a promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "discount"
+    And I set the "Description" to "sale"
+    And I set the "Start_date" to "2020-04-23 12:00:00"
+    And I set the "End_date" to "2020-04-24 12:00:00"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    Then the "Id" field should be empty
+    And the "Name" field should be empty
+    And the "Description" field should be empty
+    And the "Start_date" field should be empty
+    And the "End_date" field should be empty
+    When I paste the "Id" field
+    And I press the "Delete" button
+    Then I should see the message "Promotion has been Deleted!"
+    When I press the "Clear" button
+    And I paste the "Id" field
+    Then the "Name" field should be empty
+    And the "Description" field should be empty
+    And the "Start_date" field should be empty
+    And the "End_date" field should be empty
+
 Scenario: Read a promotion
     When I visit the "Home Page"
     And I set the "Name" to "CrazyDeal"
