@@ -62,3 +62,31 @@ Scenario: List all promotions
     Then I should see "promo" in the results
     And I should see "discount" in the results
     And I should not see "halfoff" in the results
+
+Scenario: Read a promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "CrazyDeal"
+    And I set the "Description" to "deal on deals "
+    And I set the "Start_date" to "2020-04-23 12:00:00"
+    And I set the "End_date" to "2020-04-24 12:00:00"
+    And I press the "Create" button
+    Then I should see the message "Success"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    Then the "Id" field should be empty
+    And the "Name" field should be empty
+    And the "Description" field should be empty
+    And the "Start_date" field should be empty
+    And the "End_date" field should be empty
+    When I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see "CrazyDeal" in the "Name" field
+    And I should see "deal on deals" in the "Description" field
+    And I should see "2020-04-23 12:00:00" in the "Start_date" field
+    And I should see "2020-04-24 12:00:00" in the "End_date" field
+
+Scenario: Query promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "sale"
+    And I press the "Search" button
+    Then I should see "fivepercent" in the results
