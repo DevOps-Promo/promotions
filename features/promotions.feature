@@ -84,3 +84,9 @@ Scenario: Read a promotion
     And I should see "deal on deals" in the "Description" field
     And I should see "2020-04-23 12:00:00" in the "Start_date" field
     And I should see "2020-04-24 12:00:00" in the "End_date" field
+
+Scenario: Query promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "sale"
+    And I press the "Search" button
+    Then I should see "fivepercent" in the results
