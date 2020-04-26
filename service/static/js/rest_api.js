@@ -133,8 +133,9 @@ $(function () {
     // ****************************************
 
     $("#delete-btn").click(function () {
-
+      
         var promotion_id = $("#promotion_id").val();
+        flash_message("Promotion has been Canceled!")
 
         var ajax = $.ajax({
             type: "DELETE",
@@ -146,6 +147,32 @@ $(function () {
         ajax.done(function(res){
             clear_form_data()
             flash_message("Promotion has been Deleted!")
+        });
+        
+        ajax.fail(function(res){
+            flash_message("Server error!")
+        });
+        
+    });
+    
+    // ****************************************
+    // Cancel a Promotion
+    // ****************************************
+
+    $("#cancel-btn").click(function () {
+
+        var promotion_id = $("#promotion_id").val();
+        
+        var ajax = $.ajax({
+            type: "PUT",
+            url: "/promotions/cancel/" + promotion_id,
+            contentType: "application/json",
+            data: '',
+        })
+
+        ajax.done(function(res){
+            clear_form_data()
+            flash_message("Promotion has been Canceled!")
         });
 
         ajax.fail(function(res){
