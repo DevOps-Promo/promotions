@@ -6,7 +6,7 @@ $(function () {
 
     // Updates the form with data from the response
     function update_form_data(res) {
-        $("#promotion_id").val(res.id);
+        $("#promotion_id").val(res._id);
         $("#promotion_name").val(res.name);
         $("#promotion_description").val(res.description);
         $("#promotion_start_date").val(res.start_date);
@@ -214,7 +214,7 @@ $(function () {
             var firstPromotion = "";
             for(var i = 0; i < res.length; i++) {
                 var promotion = res[i];
-                var row = "<tr><td>"+promotion._id+"</td><td>"+promotion.name+"</td><td>"+promotion.description+"</td><td>"+promotion.start_date+"</td><td>"+promotion.end_date+"</td></tr>";
+                var row = "<tr><td>"+promotion._id+"</td><td>"+promotion.name+"</td><td>"+promotion.start_date+"</td><td>"+promotion.end_date+"</td></tr>";
                 $("#search_results").append(row);
                 if (i == 0) {
                     firstPromotion = promotion;
