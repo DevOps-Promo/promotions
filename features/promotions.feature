@@ -115,3 +115,23 @@ Scenario: Query promotion
     And I set the "Name" to "sale"
     And I press the "Search" button
     Then I should see "fivepercent" in the results
+    
+Scenario: Cancel a promotion
+    When I visit the "Home Page"
+    And I set the "Name" to "promo"
+    And I press the "Search" button
+    Then I should see "promo" in the "Name" field
+    And I should see "tenpercent" in the "Description" field
+    And I should see "2020-04-23 12:00:00" in the "Start_date" field
+    And I should see "2020-04-24 12:00:00" in the "End_date" field
+    When press the "Cancel" button
+    Then I should see the message "Promotion has been Canceled"
+    When I copy the "Id" field
+    And I press the "Clear" button
+    And I paste the "Id" field
+    And I press the "Retrieve" button
+    Then I should see "promo" in the "Name" field
+    And I should see "tenpercent" in the "Description" field
+    And I should see "2020-04-23 12:00:00" in the "Start_date" field
+    And I should see (the current date and time) in the "End_date" field
+    
