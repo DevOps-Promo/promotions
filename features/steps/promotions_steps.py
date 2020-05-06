@@ -22,7 +22,8 @@ def step_impl(context):
     """ Delete all promotions and load new ones """
     headers = {'Content-Type': 'application/json'}
     promotions = requests.get(context.base_url + '/promotions', headers=headers)
-    
+    expect(promotions.status_code).to_equal(200)
+
     for promo in promotions.json():
         context.resp = requests.delete(context.base_url + '/promotions/' + str(promo['id']), headers=headers)
         expect(context.resp.status_code).to_equal(204)
